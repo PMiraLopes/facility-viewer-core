@@ -5,7 +5,7 @@ public class FacilityMonitor{
 	var facilityModel : GameObject; 
 	var environment;
 	var buildingName : String;
-	var activeFacility : Facility;
+	var facility : Facility;
 	var spaceObject : GameObject;
 
 	public function FacilityMonitor () {
@@ -14,24 +14,25 @@ public class FacilityMonitor{
 	public function FacilityMonitor (model : GameObject) {
 		facilityModel = model;
 		init();
-		//spaceObject = GameObject.Find("Spaces");
 
-		//activeFacility = new Facility(0, facilityModel.name, facilityModel, null);
-
-		//for(var i = 0; i < spaceObject.transform.childCount; i++){
-		//	activeFacility.addSpace(new FacilitySpace(spaceObject.transform.GetChild(i).name, spaceObject.transform.GetChild(i).gameObject));
-		//}
+		spacesInformations();
 	}
 
 	function init(){
-		var child : Transform;
-		activeFacility = new Facility(0, facilityModel.name, facilityModel);
+		var floor : Transform;
+		var room : Transform;
+		facility = new Facility(0, facilityModel.name, facilityModel);
+
 		for(var i = 0; i < facilityModel.transform.childCount; i++){
-			child = facilityModel.transform.GetChild(i);
-			if(!child.name.Equals("Roof")){
-				for(var k = 0; k < child.transform.childCount; k++){
-					if(child.GetChild(k).name.Contains("Room"))
-						activeFacility.addSpace(new FacilitySpace(child.GetChild(k).name, child.GetChild(k).gameObject));
+			floor = facilityModel.transform.GetChild(i);
+
+			if(!floor.name.Equals("Roof") &&
+					floor.childCount > 0 &&
+					floor.Find("Rooms") != null
+			){
+				for(var j = 0; j < floor.Find("Rooms").childCount; j++){
+					room = floor.Find("Rooms").transform.GetChild(j);
+					facility.addSpace(new FacilitySpace(room.name, room.gameObject));
 				}
 			}
 		}
@@ -46,15 +47,29 @@ public class FacilityMonitor{
 	}
 
 	function getSpaces(){
-		return activeFacility.getSpaces();
+		return facility.getSpaces();
 	}
 
 	function searchRoom(name : String){
-		return activeFacility.findRoom(name);
+		return facility.findRoom(name);
 	}
 
 	function getSpacesNames(){
-		return activeFacility.getSpacesNames();
+		return facility.getSpacesNames();
+	}
+
+	function roomInformations(name : String) {
+		var room : FacilitySpace = facility.findRoom(name);
+		var result  = room !== null ? room.toJson() : '{}';
+		return result; 
+	}
+
+	function spacesInformations() {
+		var result = new Array();
+		for(var space in facility.getSpaces().Values){
+			result.Push(space.toJson());
+		}
+		return result;
 	}
 
 }

@@ -17,6 +17,21 @@ function Update () {
 
 }
 
+function availableSpaces() {
+	Application.ExternalCall("spacesList", facilityMonitor.spacesInformations());
+}
+
+function availableFloors(){
+	var floors = new Array();
+	var count = model.transform.childCount;
+    for (var i = 0; i < count; ++i)
+    	floors.Push(model.transform.GetChild(i).name);
+
+	Application.ExternalCall("floorsList", floors);
+}
+
+
+
 /**
 *
 * Function to show one of the levels of the build and hide the others.
@@ -87,14 +102,7 @@ function getSpaces(){
 	Application.ExternalCall("updateSpaces", spaces);
 }
 
-function getFloors(){
-	var floors = new Array();
-	var count = model.transform.childCount;
-    for (var i = 0; i < count; ++i)
-    	floors.Push(model.transform.GetChild(i).name);
 
-	Application.ExternalCall("updateFloors", floors);
-}
 
 function selectNavigationMode(mode : String){
 	if(mode === "orbit"){
@@ -122,3 +130,9 @@ function normalMode(){
 		cam.gameObject.GetComponent(NavigationController).enabled = true;
 		cam.gameObject.GetComponent(OrbitCamera).enabled = false;
 }
+
+function roomInformations(name : String ) {
+	Application.ExternalCall("retriveRoomInfo", facilityMonitor.roomInformations(name));
+}
+
+

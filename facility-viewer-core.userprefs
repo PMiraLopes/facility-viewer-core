@@ -1,0 +1,15 @@
+﻿<Properties StartupItem="Assembly-CSharp-Editor.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/src/Domain/FacilitySpace.js">
+    <Files>
+      <File FileName="Assets/src/GUIController.js" Line="28" Column="43" />
+      <File FileName="Assets/src/FacilityMonitor.js" Line="1" Column="15" />
+      <File FileName="Assets/src/Domain/Facility.js" Line="51" Column="15" />
+      <File FileName="Assets/src/Domain/FacilitySpace.js" Line="19" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

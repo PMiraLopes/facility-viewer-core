@@ -1,20 +1,29 @@
 ﻿#pragma strict
 
-public class FacilitySpace{
+public class FacilitySpace extends System.Object {
 
-	private var name : String;
+	public var spaceName : String;
 	private var space : GameObject;
+	public var objects : String[];
 
-	public function FacilitySpace(name : String, space : GameObject){
-		this.name = name;
+	public function FacilitySpace(spaceName : String, space : GameObject) {
+		this.spaceName = spaceName;
 		this.space = space;
+		this.objects = new String[space.transform.childCount];
+
+		for(var i = 0; i < space.transform.childCount; i++)
+			this.objects[i] = space.transform.GetChild(i).name;
 	}
-	
-	public function getName(){
-		return name;
+
+	public function getSpace() {
+		return this.space;
 	}
-	
-	public function getSpace(){
-		return space;
+
+	public function getObjects() {
+		return this.objects;
+	} 
+
+	public function toJson() {
+		return JsonUtility.ToJson(this);
 	}
 }
