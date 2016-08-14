@@ -45,29 +45,16 @@ function selectSpace(space: String){
 	}
 }
 
-
-
-/**
-*
-* Function to show one of the levels of the build and hide the others.
-*
-*@param name of the level
-*@return 
-**/
 function toggleLevel(levelName : String){
 	var children = model.transform.childCount;
-    for (var i = 0; i < children; ++i){
-    	if(model.transform.GetChild(i).name.Equals(levelName))
-     		model.transform.GetChild(i).gameObject.SetActive(true);
-     	else
-     		model.transform.GetChild(i).gameObject.SetActive(false);
-     }	
+  for (var i = 0; i < children; ++i){
+    if(model.transform.GetChild(i).name.Equals(levelName)){
+   		model.transform.GetChild(i).gameObject.SetActive(!model.transform.GetChild(i).gameObject.activeSelf);
+   		break;
+    }
+  };
 }
 
-function unityFindRoom(){
-		var room = input.text;
-		findRoom(room);
-}
 
 /**
 *
