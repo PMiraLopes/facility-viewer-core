@@ -7,6 +7,7 @@ var model : GameObject;
 var facilityMonitor : FacilityMonitor;
 var cam : Camera;
 var input : InputField;
+var pointer: GameObject;
 
 function Start () {
 	Debug.Log("[INFO] Starting the facility Monitoring system...");
@@ -28,6 +29,20 @@ function availableFloors(){
     	floors.Push(model.transform.GetChild(i).name);
 
 	Application.ExternalCall("floorsList", floors);
+}
+
+function selectSpace(space: String){
+	var result : FacilitySpace = facilityMonitor.searchRoom(space);
+	var aux = new Vector3(0,3,0);
+	if(result != null){
+		cam.transform.LookAt(result.getSpace().transform);
+		pointer.transform.position = result.getSpace().transform.position + aux;
+		return true;
+	}
+	else{
+		Debug.Log("Room not found");
+		return false;
+	}
 }
 
 
