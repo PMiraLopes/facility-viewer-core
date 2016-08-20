@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{C5540458-1F95-0291-8759-F22A6283B5E5}") = "facility-viewer-core", "Assembly-CSharp.csproj", "{EFE62DA6-E438-7E32-B55E-4B14F7D1209A}"
+EndProject
 Project("{C5540458-1F95-0291-8759-F22A6283B5E5}") = "facility-viewer-core", "Assembly-CSharp-Editor.csproj", "{0A0B86E9-5B75-142D-ECBA-33C83623AB9F}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFE62DA6-E438-7E32-B55E-4B14F7D1209A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE62DA6-E438-7E32-B55E-4B14F7D1209A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE62DA6-E438-7E32-B55E-4B14F7D1209A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE62DA6-E438-7E32-B55E-4B14F7D1209A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A0B86E9-5B75-142D-ECBA-33C83623AB9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A0B86E9-5B75-142D-ECBA-33C83623AB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A0B86E9-5B75-142D-ECBA-33C83623AB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,6 +2,7 @@
 
 import UnityEngine;
 import UnityEngine.UI;
+import UnityEngine.Networking;
 
 var model : GameObject;
 var facilityMonitor : FacilityMonitor;
@@ -12,10 +13,22 @@ var pointer: GameObject;
 function Start () {
 	Debug.Log("[INFO] Starting the facility Monitoring system...");
 	facilityMonitor = new FacilityMonitor(model);
+  getData();
 }
 
 function Update () {
+}
 
+public function getData(){
+  var url = "http://127.0.0.1:3000/measures";
+  var www : WWW = new WWW (url);
+  yield www;
+
+  if(www.error) {
+    print("There was an error: " + www.error);
+  }else{
+    print(www.text);
+  }
 }
 
 function availableSpaces() {
@@ -40,7 +53,7 @@ function selectSpace(space: String){
 		return true;
 	}
 	else{
-		Debug.Log("Room not found");
+		print("Room not found");
 		return false;
 	}
 }
@@ -61,7 +74,7 @@ function toggleLevel(levelName : String){
 * Function search for a specific room.
 *
 *@param name of the room
-*@return 
+*@return
 **/
 function findRoom(roomName){
 	var result : FacilitySpace = facilityMonitor.searchRoom(roomName);
@@ -94,7 +107,7 @@ function roomInformation(name : String){
 * Function to retrieve the available rooms of the facility.
 *
 *@param
-*@return an array with the names of the spaces of the facility 
+*@return an array with the names of the spaces of the facility
 **/
 function getSpaces(){
 	var spaces = new Array();
@@ -136,5 +149,3 @@ function normalMode(){
 function roomInformations(name : String ) {
 	Application.ExternalCall("retriveRoomInfo", facilityMonitor.roomInformations(name));
 }
-
-
