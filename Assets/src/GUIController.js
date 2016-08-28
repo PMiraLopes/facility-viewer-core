@@ -13,7 +13,6 @@ var pointer: GameObject;
 function Start () {
 	Debug.Log("[INFO] Starting the facility Monitoring system...");
 	facilityMonitor = new FacilityMonitor(model);
-  getData();
 }
 
 function Update () {
@@ -66,6 +65,18 @@ function toggleLevel(levelName : String){
    		break;
     }
   };
+}
+
+function toggleBoxesView() {
+  var children = model.transform.childCount;
+  var value  = model.transform.GetChild(1).gameObject.activeSelf;
+  for (var i = 0; i < children; ++i){
+    if(model.transform.GetChild(i).gameObject.name.Equals("Boxes")){
+      model.transform.GetChild(i).gameObject.SetActive(!value);
+    } else {
+      model.transform.GetChild(i).gameObject.SetActive(value);
+    }
+  }
 }
 
 
