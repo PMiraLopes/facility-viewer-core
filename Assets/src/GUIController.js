@@ -7,27 +7,70 @@ import UnityEngine.Networking;
 var model : GameObject;
 var facilityMonitor : FacilityMonitor;
 var cam : Camera;
-var input : InputField;
 var pointer: GameObject;
+var measures : Measure[];
+var boxViewActivated;
+var selectedBox : String;
 
 function Start () {
 	Debug.Log("[INFO] Starting the facility Monitoring system...");
 	facilityMonitor = new FacilityMonitor(model);
+  boxViewActivated = false;
+  getOverallConsumption();
 }
 
 function Update () {
+  if ( boxViewActivated && Input.GetMouseButtonDown(0)){
+    var hit : RaycastHit;
+    var ray : Ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+    if (Physics.Raycast (ray, hit, 500.0)){
+      selectedBox = hit.collider.transform.gameObject.name;
+      overallViewSelectedSpace();
+    }
+    else{
+      selectedBox = null;
+    }
+  }
 }
 
-public function getData(){
-  var url = "http://127.0.0.1:3000/measures";
+public function getOverallConsumption() {
+  var url = "http://127.0.0.1:3000/overall-consumption";
   var www : WWW = new WWW (url);
   yield www;
 
   if(www.error) {
     print("There was an error: " + www.error);
   }else{
-    print(www.text);
+
+    var aux : String[] = www.text.Split("["[0]);
+    aux = aux[1].Split("]"[0]);
+    aux = aux[0].Split("}"[0]);
+
+    measures = new Measure[6];
+    var measure : String = aux[0];
+    var object : GameObject;
+
+    for(var i = 0; i < 6; i++){
+      if(i > 0)
+        measure = aux[i].Substring(1);
+
+      measures[i] = Measure.CreateFromJSON(measure + "}");
+
+      object = model.transform.Find("Boxes").transform.GetChild(i).gameObject;
+
+      if(measures[i].value >= 50)
+        object.GetComponent.<Renderer>().material.color  = Color.red;
+      else if(measures[i].value >= 30)
+        object.GetComponent.<Renderer>().material.color  = Color.yellow;
+        else
+          object.GetComponent.<Renderer>().material.color  = Color.green;
+    }
   }
+}
+
+function overallViewSelectedSpace() {
+  if(selectedBox != null)
+	 Application.ExternalCall("overallViewSelectedSpace", selectedBox);
 }
 
 function availableSpaces() {
@@ -70,6 +113,11 @@ function toggleLevel(levelName : String){
 function toggleBoxesView() {
   var children = model.transform.childCount;
   var value  = model.transform.GetChild(1).gameObject.activeSelf;
+
+  boxViewActivated = !boxViewActivated;
+  //if(boxViewActivated) //when real-time
+    //getOverallConsumption();
+
   for (var i = 0; i < children; ++i){
     if(model.transform.GetChild(i).gameObject.name.Equals("Boxes")){
       model.transform.GetChild(i).gameObject.SetActive(!value);

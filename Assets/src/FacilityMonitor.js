@@ -2,7 +2,7 @@
 import System.Collections.Generic;
 
 public class FacilityMonitor{
-	var facilityModel : GameObject; 
+	var facilityModel : GameObject;
 	var environment;
 	var buildingName : String;
 	var facility : Facility;
@@ -14,8 +14,6 @@ public class FacilityMonitor{
 	public function FacilityMonitor (model : GameObject) {
 		facilityModel = model;
 		init();
-
-		spacesInformations();
 	}
 
 	function init(){
@@ -38,10 +36,6 @@ public class FacilityMonitor{
 		}
 	}
 
-	function Update () {
-
-	}
-
 	function getModel(){
 		return this.facilityModel;
 	}
@@ -61,7 +55,7 @@ public class FacilityMonitor{
 	function roomInformations(name : String) {
 		var room : FacilitySpace = facility.findRoom(name);
 		var result  = room !== null ? room.toJson() : '{}';
-		return result; 
+		return result;
 	}
 
 	function spacesInformations() {

@@ -21,7 +21,7 @@ public class FacilitySpace extends System.Object {
 
 	public function getObjects() {
 		return this.objects;
-	} 
+	}
 
 	public function toJson() {
 		return JsonUtility.ToJson(this);
