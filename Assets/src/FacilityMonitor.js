@@ -52,6 +52,10 @@ public class FacilityMonitor{
 		return facility.getSpacesNames();
 	}
 
+  function highlightObjects(){
+		facility.highlightObjects();
+	}
+
 	function roomInformations(name : String) {
 		var room : FacilitySpace = facility.findRoom(name);
 		var result  = room !== null ? room.toJson() : '{}';

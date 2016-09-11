@@ -4,15 +4,18 @@ public class FacilitySpace extends System.Object {
 
 	public var spaceName : String;
 	private var space : GameObject;
-	public var objects : String[];
+  public var facilityObjects : FacilityObject[];
+  public var highlighted : boolean;
 
 	public function FacilitySpace(spaceName : String, space : GameObject) {
 		this.spaceName = spaceName;
 		this.space = space;
-		this.objects = new String[space.transform.childCount];
+    this.facilityObjects = new FacilityObject[space.transform.childCount];
+    this.highlighted = false;
 
-		for(var i = 0; i < space.transform.childCount; i++)
-			this.objects[i] = space.transform.GetChild(i).name;
+		for(var i = 0; i < space.transform.childCount; i++){
+      this.facilityObjects[i] = new FacilityObject(space.transform.GetChild(i).gameObject);
+    }
 	}
 
 	public function getSpace() {
@@ -20,10 +23,22 @@ public class FacilitySpace extends System.Object {
 	}
 
 	public function getObjects() {
-		return this.objects;
+		return this.facilityObjects;
 	}
 
 	public function toJson() {
 		return JsonUtility.ToJson(this);
 	}
+
+  public function highlightObjects(){
+    var count = this.space.transform.childCount;
+    for(var i = 0; i < count; i++){
+      if(!this.highlighted){
+        facilityObjects[i].highlightObject();
+      }else{
+        facilityObjects[i].turnOffHighlight();
+      }
+    }
+    this.highlighted = !this.highlighted;
+  }
 }

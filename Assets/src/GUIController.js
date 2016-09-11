@@ -7,15 +7,19 @@ import UnityEngine.Networking;
 var model : GameObject;
 var facilityMonitor : FacilityMonitor;
 var cam : Camera;
-var pointer: GameObject;
 var measures : Measure[];
 var boxViewActivated;
 var selectedBox : String;
+
+var oldMaterial : Material;
+var highlightMaterial: Material;
+var selectedSpace: FacilitySpace;
 
 function Start () {
 	Debug.Log("[INFO] Starting the facility Monitoring system...");
 	facilityMonitor = new FacilityMonitor(model);
   boxViewActivated = false;
+  selectedSpace = null;
   getOverallConsumption();
 }
 
@@ -68,6 +72,13 @@ public function getOverallConsumption() {
   }
 }
 
+function clearSelectedRoom () {
+  if(selectedSpace != null)
+    selectedSpace.getSpace().GetComponent.<Renderer>().material = oldMaterial;
+
+  selectedSpace = null;
+}
+
 function overallViewSelectedSpace() {
   if(selectedBox != null)
 	 Application.ExternalCall("overallViewSelectedSpace", selectedBox);
@@ -87,11 +98,16 @@ function availableFloors(){
 }
 
 function selectSpace(space: String){
+  if(selectedSpace != null){
+    selectedSpace.getSpace().GetComponent.<Renderer>().material = oldMaterial;
+  }
+
 	var result : FacilitySpace = facilityMonitor.searchRoom(space);
 	var aux = new Vector3(0,3,0);
 	if(result != null){
 		cam.transform.LookAt(result.getSpace().transform);
-		pointer.transform.position = result.getSpace().transform.position + aux;
+    result.getSpace().GetComponent.<Renderer>().material = highlightMaterial;
+    selectedSpace = result;
 		return true;
 	}
 	else{
@@ -125,6 +141,10 @@ function toggleBoxesView() {
       model.transform.GetChild(i).gameObject.SetActive(value);
     }
   }
+}
+
+function highlightObjects() {
+  facilityMonitor.highlightObjects();
 }
 
 
