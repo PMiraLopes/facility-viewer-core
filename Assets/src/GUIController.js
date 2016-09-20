@@ -7,6 +7,7 @@ import UnityEngine.Networking;
 var model : GameObject;
 var facilityMonitor : FacilityMonitor;
 var cam : Camera;
+var cam2D : Camera;
 var measures : Measure[];
 var boxViewActivated;
 var selectedBox : String;
@@ -62,12 +63,18 @@ public function getOverallConsumption() {
 
       object = model.transform.Find("Boxes").transform.GetChild(i).gameObject;
 
-      if(measures[i].value >= 50)
+      if(measures[i].value >= 20)
         object.GetComponent.<Renderer>().material.color  = Color.red;
-      else if(measures[i].value >= 30)
-        object.GetComponent.<Renderer>().material.color  = Color.yellow;
-        else
-          object.GetComponent.<Renderer>().material.color  = Color.green;
+      else{
+        if(measures[i].value >= 14)
+          object.GetComponent.<Renderer>().material.color  = new Color(1F, 0.5F, 0.1F);
+          else{
+            if(measures[i].value >= 7)
+              object.GetComponent.<Renderer>().material.color  = Color.yellow;
+            else
+              object.GetComponent.<Renderer>().material.color  = Color.green;
+          }
+      }
     }
   }
 }
@@ -227,4 +234,14 @@ function normalMode(){
 
 function roomInformations(name : String ) {
 	Application.ExternalCall("retriveRoomInfo", facilityMonitor.roomInformations(name));
+}
+
+function setOrthographic() {
+  cam2D.gameObject.SetActive(true);
+  cam.gameObject.SetActive(false);
+}
+
+function setPrespective() {
+  cam2D.gameObject.SetActive(false);
+  cam.gameObject.SetActive(true);
 }
