@@ -37,17 +37,30 @@ public class FacilityObject extends System.Object {
 	}
 
   public function turnOffHighlight() {
-    this.object.GetComponent.<Renderer>().material.color  = Color.grey;
+    var material = new Material(Shader.Find("Diffuse"));
+    material.color =  Color.grey;
+    this.object.GetComponent.<Renderer>().material = material;
   }
 
   public function highlightObject(){
+    var material = new Material(Shader.Find("Diffuse"));
+    Debug.Log(this.object.GetComponent.<Renderer>().materials);
+
     if(this.status.Equals("Active")){
-      if(this.consumption >= 15)
-        this.object.GetComponent.<Renderer>().material.color  = Color.red;
-      else if(this.consumption >= 7)
-        this.object.GetComponent.<Renderer>().material.color  = Color.yellow;
-        else
-          this.object.GetComponent.<Renderer>().material.color  = Color.green;
+      if(this.consumption >= 15){
+        material.color = Color.red;
+        this.object.GetComponent.<Renderer>().material = material;
+      }
+      else {
+        if(this.consumption >= 7){
+          material.color = Color.yellow;
+          this.object.GetComponent.<Renderer>().material = material;
+        }
+        else {
+          material.color = Color.green;
+          this.object.GetComponent.<Renderer>().material  = material;
+        }
+      }
     }
   }
 }

@@ -223,11 +223,13 @@ function selectNavigationMode(mode : String){
 }
 
 function orbitMode(){
+    setPrespective();
 		cam.gameObject.GetComponent(NavigationController).enabled = false;
 		cam.gameObject.GetComponent(OrbitCamera).enabled = true;
 }
 
 function normalMode(){
+    setPrespective();
 		cam.gameObject.GetComponent(NavigationController).enabled = true;
 		cam.gameObject.GetComponent(OrbitCamera).enabled = false;
 }
