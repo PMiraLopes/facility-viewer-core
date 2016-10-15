@@ -25,14 +25,17 @@ function Start () {
 }
 
 function Update () {
-  if ( boxViewActivated && Input.GetMouseButtonDown(0)){
+  if (Input.GetMouseButtonDown(0)){
     var hit : RaycastHit;
     var ray : Ray = Camera.main.ScreenPointToRay (Input.mousePosition);
     if (Physics.Raycast (ray, hit, 500.0)){
       selectedBox = hit.collider.transform.gameObject.name;
-      overallViewSelectedSpace();
+      selectSpace(selectedBox);
+      Application.ExternalCall("selectSpaceFromViewer", selectedBox);
+  //    overallViewSelectedSpace();
     }
     else{
+      clearSelectedRoom();
       selectedBox = null;
     }
   }

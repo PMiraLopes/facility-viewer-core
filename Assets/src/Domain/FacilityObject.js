@@ -31,6 +31,18 @@ public class FacilityObject extends System.Object {
 		return this.object;
 	}
 
+  public function getName() {
+    return this.name;
+  }
+
+  public function getStatus() {
+    return this.status;
+  }
+
+  public function getConsumption(){
+    return this.consumption;
+  }
+
 
 	public function toJson() {
 		return JsonUtility.ToJson(this);
